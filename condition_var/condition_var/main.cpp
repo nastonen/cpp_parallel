@@ -31,7 +31,7 @@ void fetch_data()
 		// Update sdata, then notify the progress bar thread
 		std::unique_lock<std::mutex> uniq_lck(data_mutex);
 		sdata += "Block" + std::to_string(i + 1);
-		std::cout << "Fetched sdata: " << sdata << std::endl;
+		std::cout << "Fetched sdata: " << sdata << std::endl; 
 		update_progress = true;
 		uniq_lck.unlock();
 		data_cv.notify_all();

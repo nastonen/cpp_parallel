@@ -17,6 +17,12 @@ std::condition_variable cond_var;
 // bool flag for predicate
 bool condition = false;
 
+// Condition checking function
+bool checkCondition()
+{
+	return condition;
+}
+
 // Waiting thread
 void reader()
 {
@@ -36,8 +42,10 @@ void reader()
 	//   wait();
 	// So it waits until writer sets condition to true!
 	//
-	// When wait() wakes up, it locks the mutex again!!!
-	cond_var.wait(uniq_lck, [] { return condition; });
+	// When wait() wakes up, it locks the mutex again and re-checks the condition
+	//
+	// A lambda or a function can be passed
+	cond_var.wait(uniq_lck, checkCondition); //[] { return condition; });
 
 	// The condition variable has woken this thread up
 	// and locked the mutex
