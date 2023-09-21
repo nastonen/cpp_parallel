@@ -55,7 +55,9 @@ void progress_bar()
 		std::cout << "Progress bar thread waiting for data..." << std::endl;
 
 		// Wait until there is some new data to display
+		// Lock the mutex
 		std::unique_lock<std::mutex> data_lck(data_mutex);
+		// wait() unlocks it's argument (that's why unique_lock) and blocks until notification is received
 		data_cv.wait(data_lck, [] { return update_progress; });
 
 		// Wake up and use the new value
